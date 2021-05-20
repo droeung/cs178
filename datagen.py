@@ -14,20 +14,20 @@ from scipy.linalg import sqrtm
 
 
 def data_gauss(N0, N1=None, mu0=arr([0, 0]), mu1=arr([1, 1]), sig0=np.eye(2), sig1=np.eye(2)):
-    """
-    Sample data from a two-component Gaussian mixture model.
+    """Sample data from a two-component Gaussian mixture model.
 
-        Args:
-            N0 (int): Number of data to sample for class -1.
-            N1 :(int) Number of data to sample for class 1.
-            mu0 (arr): numpy array
-            mu1 (arr): numpy array
-            sig0 (arr): numpy array
-            sig1 (arr): numpy array
+    Args:
+        N0 (int): Number of data to sample for class -1.
+        N1 :(int) Number of data to sample for class 1.
+        mu0 (arr): numpy array
+        mu1 (arr): numpy array
+        sig0 (arr): numpy array
+        sig1 (arr): numpy array
 
-        Returns:
-            X (array): Array of sampled data
-            Y (array): Array of class values that correspond to the data points in X.
+    Returns:
+        X (array): Array of sampled data
+        Y (array): Array of class values that correspond to the data points in X.
+
     TODO: test more
     """
     if not N1:
@@ -55,22 +55,23 @@ def data_gauss(N0, N1=None, mu0=arr([0, 0]), mu1=arr([1, 1]), sig0=np.eye(2), si
 
 def data_GMM(N, C, D=2, get_Z=False):
     """Sample data from a Gaussian mixture model.
-    Builds a random GMM with C components and draws M data x^{(i)} from a mixture
+
+	Builds a random GMM with C components and draws M data x^{(i)} from a mixture
 	of Gaussians in D dimensions
 
-	Args:
-	    N (int): Number of data to be drawn from a mixture of Gaussians.
-	    C (int): Number of clusters.
-	    D (int): Number of dimensions.
-	    get_Z (bool): If True, returns a an array indicating the cluster from which each
-		    data point was drawn.
+    Args:
+        N (int): Number of data to be drawn from a mixture of Gaussians.
+        C (int): Number of clusters.
+        D (int): Number of dimensions.
+        get_Z (bool): If True, returns a an array indicating the cluster from which each
+            data point was drawn.
 
-	Returns:
-	    X (arr): N x D array of data.
-	    Z (arr): 1 x N array of cluster ids; returned also only if get_Z=True
+    Returns:
+        X (arr): N x D array of data.
+        Z (arr): 1 x N array of cluster ids; returned also only if get_Z=True
 
-	TODO: test more; N vs M
-	"""
+    TODO: test more; N vs M
+    """
     C += 1
     pi = np.zeros(C)
     for c in range(C):
@@ -106,22 +107,23 @@ def data_GMM(N, C, D=2, get_Z=False):
 
     if get_Z:
         return (arr(X),Z)
-    return arr(X)
+    else:
+        return arr(X)
 
 
 def gamrand(alpha, lmbda):
     """Gamma(alpha, lmbda) generator using the Marsaglia and Tsang method
 
-	Args:
-	    alpha (float): scalar
-	    lambda (float): scalar
+    Args:
+        alpha (float): scalar
+        lambda (float): scalar
 
-	Returns:
-	    (float) : scalar
+    Returns:
+        (float) : scalar
 
-	TODO: test more
-	"""
-    # (algorithm 4.33).
+    TODO: test more
+    """
+  # (algorithm 4.33).
     if alpha > 1:
         d = alpha - 1 / 3
         c = 1 / np.sqrt(9 * d)
@@ -137,8 +139,9 @@ def gamrand(alpha, lmbda):
 
         return d * V / lmbda
 
-    x = gamrand(alpha + 1, lmbda)
-    return x * np.random.rand()**(1 / alpha)
+    else:
+        x = gamrand(alpha + 1, lmbda)
+        return x * np.random.rand()**(1 / alpha)
 
 
 
@@ -168,6 +171,9 @@ def data_mouse():
         fig.canvas.draw()
 
     fig.canvas.mpl_connect('button_press_event',on_click)
-    plt.show()
+    inter=plt.isinteractive(); hld=plt.ishold();
+    plt.ioff(); plt.hold(True); plt.show();
+    if inter: plt.ion();
+    if not hld: plt.hold(False);
     return X,Y
 

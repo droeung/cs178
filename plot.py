@@ -37,9 +37,10 @@ def plotClassify2D(learner, X, Y, pre=lambda x: x, axis=None, nGrid=128, **kwarg
         raise ValueError('plotClassify2D: function can only be called using two-dimensional data (features)')
 
     # TODO: Clean up code
-    is_default = axis == None
-    if is_default:
-        axis = plt
+
+    if axis == None: axis = plt
+    hld = axis.ishold();
+    axis.hold(True);
     axis.plot( X[:,0],X[:,1], 'k.', visible=False )
     # TODO: can probably replace with final dot plot and use transparency for image (?)
     ax = axis.axis()
@@ -55,13 +56,12 @@ def plotClassify2D(learner, X, Y, pre=lambda x: x, axis=None, nGrid=128, **kwarg
     cmap = plt.cm.get_cmap()
     # TODO: if Soft: predictSoft; get colors for each class from cmap; blend pred with colors & show
     #
-    classes = np.unique(Y)
+    try: classes = np.array(learner.classes);
+    except Exception: classes = np.unique(Y)
     cvals = (classes - min(classes))/(max(classes)-min(classes)+1e-100)
     for i,c in enumerate(classes):
         axis.plot( X[Y==c,0],X[Y==c,1], 'ko', color=cmap(cvals[i]), **kwargs )
-
-    if is_default:
-        plt.show()
+    axis.axis(ax); axis.hold(hld)
 
 
 def histy(X,Y,axis=None,**kwargs):

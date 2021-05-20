@@ -90,7 +90,7 @@ class classifier:
             float: Negative log likelihood of the predictions
         """
         M,N = X.shape
-        P = arr( self.predictSoft(X) )
+        P = np.asarray( self.predictSoft(X) )
         P /= np.sum(P, axis=1, keepdims=True)       # normalize to sum to one
         Y = toIndex(Y, self.classes)
         return - np.mean( np.log( P[ np.arange(M), Y ] ) ) # evaluate
@@ -229,16 +229,15 @@ class regressor:
             return self.train(*args, **kwargs)
 
 
-
     def __call__(self, *args, **kwargs):
         """Syntatic sugar for prediction; same as "predict".  """
         return self.predict(*args, **kwargs)
 
 
 
-  ####################################################
-  # Standard loss f'n definitions for regressors     #
-  ####################################################
+    ####################################################
+    # Standard loss f'n definitions for regressors     #
+    ####################################################
     def mae(self, X, Y):
         """Computes the mean absolute error
 
