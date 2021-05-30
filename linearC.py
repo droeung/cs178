@@ -1,5 +1,5 @@
 import numpy as np
-import mltools as ml
+
 from .base import classifier
 from .base import regressor
 from .utils import toIndex, fromIndex, to1ofK, from1ofK
@@ -141,7 +141,7 @@ class linearClassify(classifier):
         M,N = X.shape
         P = self.predictSoft(X)
         J = - np.sum( np.log( P[range(M),Y[:]] ) )   # assumes Y=0...C-1
-        Y = ml.to1ofK(Y,self.classes)
+        Y = to1ofK(Y,self.classes)
         DJ= NotImplemented ##- np.sum( P**Y
         return J,DJ
 

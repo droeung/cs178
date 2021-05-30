@@ -96,16 +96,15 @@ class classifier:
         return - np.mean( np.log( P[ np.arange(M), Y ] ) ) # evaluate
 
 
-
     def auc(self, X, Y):
         """Compute the area under the roc curve on the given test data.
 
         Args:
-            X (arr): M,N array of M data points with N features each
-            Y (arr): M, or M,1 array of target class values for each data point
+        X (arr): M,N array of M data points with N features each
+        Y (arr): M, or M,1 array of target class values for each data point
 
         Returns:
-            float: Area under the ROC curve
+        float: Area under the ROC curve
 
         This method only works on binary classifiers.
         """
@@ -227,6 +226,7 @@ class regressor:
         """Simple constructor for base regressor class; specialized by various learners"""
         if len(args) or len(kwargs):
             return self.train(*args, **kwargs)
+
 
 
     def __call__(self, *args, **kwargs):

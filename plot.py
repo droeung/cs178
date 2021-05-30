@@ -39,8 +39,6 @@ def plotClassify2D(learner, X, Y, pre=lambda x: x, axis=None, nGrid=128, **kwarg
     # TODO: Clean up code
 
     if axis == None: axis = plt
-    hld = axis.ishold();
-    axis.hold(True);
     axis.plot( X[:,0],X[:,1], 'k.', visible=False )
     # TODO: can probably replace with final dot plot and use transparency for image (?)
     ax = axis.axis()
@@ -61,7 +59,7 @@ def plotClassify2D(learner, X, Y, pre=lambda x: x, axis=None, nGrid=128, **kwarg
     cvals = (classes - min(classes))/(max(classes)-min(classes)+1e-100)
     for i,c in enumerate(classes):
         axis.plot( X[Y==c,0],X[Y==c,1], 'ko', color=cmap(cvals[i]), **kwargs )
-    axis.axis(ax); axis.hold(hld)
+    axis.axis(ax);
 
 
 def histy(X,Y,axis=None,**kwargs):
